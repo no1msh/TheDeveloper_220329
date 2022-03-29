@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
         android:background="@color/main_Color_black"
@@ -15,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            >
+            android:background="@drawable/round_border_box">
 
             <ImageView
                 android:id="@+id/imgContributes"
@@ -40,5 +39,6 @@
                 android:layout_height="wrap_content"
                 android:text="검색"/>
         </LinearLayout>
+
     </LinearLayout>
 </layout>
