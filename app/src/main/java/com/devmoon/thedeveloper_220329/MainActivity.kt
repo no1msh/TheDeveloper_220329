@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.devmoon.thedeveloper_220329.databinding.ActivityMainBinding
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou
+import com.google.firebase.auth.FirebaseUser
 
 class MainActivity : BaseActivity() {
 
@@ -34,6 +35,8 @@ class MainActivity : BaseActivity() {
     }
 
     override fun setValues() {
+
+
 
     }
 

@@ -20,17 +20,6 @@ class SignInActivity : BaseActivity() {
 
     private lateinit var googleSignInClient: GoogleSignInClient
 
-    //nullable한 FirebaseAuth 객체 선언
-    var auth: FirebaseAuth? = null;
-
-    override fun onStart() {
-        super.onStart()
-        if (auth?.currentUser != null) {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_in)
@@ -81,8 +70,7 @@ class SignInActivity : BaseActivity() {
 
     override fun setValues() {
 
-        //auth 객체 초기화
-        auth = FirebaseAuth.getInstance()
+
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id)) // 필수사항, 사용자의 token을 사용
