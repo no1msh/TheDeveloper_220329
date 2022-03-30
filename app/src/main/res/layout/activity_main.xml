@@ -35,8 +35,10 @@
                 android:hint="확인하고 싶은 닉네임을 입력해주세요."/>
             <Button
                 android:id="@+id/btnSubmit"
+                android:background="@color/primary_rally_green"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="normal"
                 android:text="검색"/>
         </LinearLayout>
 
