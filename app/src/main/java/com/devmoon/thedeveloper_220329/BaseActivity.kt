@@ -12,6 +12,8 @@ abstract class BaseActivity : AppCompatActivity() {
     //nullable한 FirebaseAuth 객체 선언
     var auth: FirebaseAuth? = null;
 
+    // 로딩다이얼로그
+    var loadingDialog :LoadingDialog? = null;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,6 +21,9 @@ abstract class BaseActivity : AppCompatActivity() {
         //auth 객체 초기화
         auth = FirebaseAuth.getInstance()
         mContext = this
+
+        // 로딩 다이얼로그
+        loadingDialog = LoadingDialog(mContext)
     }
     abstract fun setupEvents()
     abstract fun setValues()

@@ -2,7 +2,9 @@ package com.devmoon.thedeveloper_220329
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Paint
 import android.os.Bundle
+import android.text.SpannableString
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.devmoon.thedeveloper_220329.databinding.ActivitySignInBinding
@@ -70,11 +72,13 @@ class SignInActivity : BaseActivity() {
 
     override fun setValues() {
 
+        binding.btnSignUp.paintFlags = Paint.UNDERLINE_TEXT_FLAG
 
-
+        // 구글 로그인 관련
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id)) // 필수사항, 사용자의 token을 사용
             .requestEmail() // 사용자의 이메일 사용
+            .requestProfile()
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
