@@ -4,6 +4,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
 import com.devmoon.thedeveloper_220329.databinding.ActivityMainBinding
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou
 import com.google.firebase.auth.FirebaseUser
@@ -36,7 +37,7 @@ class MainActivity : BaseActivity() {
 
     override fun setValues() {
 
-
+        Glide.with(mContext).load(auth!!.currentUser!!.photoUrl).into(binding.imgProfile)
 
     }
 

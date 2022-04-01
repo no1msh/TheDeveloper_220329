@@ -26,8 +26,9 @@ class SplashActivity : BaseActivity() {
 
         myHandler.postDelayed({
 
+            // 최근 로그인 했던 내역이 있으면 바로 로그인을 진행시켜서 메인화면으로 이동.
             if (auth?.currentUser != null) {
-                Toast.makeText(mContext,"${auth!!.currentUser!!.email}님 \n환영합니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(mContext,"${auth!!.currentUser!!.displayName}님 \n환영합니다.", Toast.LENGTH_LONG).show()
                 val mainIntent = Intent(mContext, MainActivity::class.java)
                 startActivity(mainIntent)
                 finish()

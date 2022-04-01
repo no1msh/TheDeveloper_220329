@@ -10,10 +10,10 @@ abstract class BaseActivity : AppCompatActivity() {
     lateinit var mContext : Context
 
     //nullable한 FirebaseAuth 객체 선언
-    var auth: FirebaseAuth? = null;
+    var auth: FirebaseAuth? = null
 
     // 로딩다이얼로그
-    var loadingDialog :LoadingDialog? = null;
+    lateinit var loadingDialog : LoadingDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
