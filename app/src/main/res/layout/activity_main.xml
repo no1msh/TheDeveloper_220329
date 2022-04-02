@@ -48,5 +48,16 @@
                 android:textStyle="normal" />
         </LinearLayout>
 
+        <Button
+            android:id="@+id/btnSignOut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign Out"/>
+
+        <TextView
+            android:id="@+id/txtUserEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="유저이메일"/>
     </LinearLayout>
 </layout>

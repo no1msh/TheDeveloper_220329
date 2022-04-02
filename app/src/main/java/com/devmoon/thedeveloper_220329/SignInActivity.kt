@@ -2,7 +2,6 @@ package com.devmoon.thedeveloper_220329
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Paint
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -12,11 +11,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class SignInActivity : BaseActivity() {
 
     lateinit var binding: ActivitySignInBinding
+
+    private lateinit var auth: FirebaseAuth
 
     private lateinit var googleSignInClient: GoogleSignInClient
 
@@ -24,8 +28,19 @@ class SignInActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_in)
 
+        auth = Firebase.auth
+
         setupEvents()
         setValues()
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            moveMainActivity()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -47,89 +62,74 @@ class SignInActivity : BaseActivity() {
         }
     }
 
-
     override fun setupEvents() {
+        binding.btnLogIn2.setOnClickListener {
 
-        // 로그인 버튼 클릭 리스너
-        binding.btnLogIn.setOnClickListener {
+            loadingDialog.show()
+            val inputEmail = binding.edtSignInEmail2.text.toString()
+            val inputPassword = binding.edtSignInPassword2.text.toString()
 
-            val signInEmail = binding.edtSignInEmail.text.toString()
-            val signInPassword = binding.edtSignInEmail.text.toString()
-
-            if (!signInEmail.contains('@')) {
+            if (!inputEmail.contains('@')) {
                 Toast.makeText(mContext, "올바른 이메일 형식이 아닙니다.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
 
-            } else if (signInPassword.isEmpty()) {
+            } else if (inputPassword.isEmpty()) {
                 Toast.makeText(mContext, "패스워드를 입력해주세요.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
 
             } else {
-                loadingDialog.show()
-                auth?.signInWithEmailAndPassword(signInEmail, signInPassword)
-                    ?.addOnCompleteListener { it ->
-                        if (it.isSuccessful) {
+                auth.signInWithEmailAndPassword(inputEmail, inputPassword)
+                    .addOnCompleteListener { task ->
+
+                        if (task.isSuccessful) {
                             loadingDialog.dismiss()
-                            val mainIntent = Intent(mContext, MainActivity::class.java)
-                            startActivity(mainIntent)
+                            Toast.makeText(mContext, "로그인 성공", Toast.LENGTH_SHORT).show()
+                            moveMainActivity()
+                            finish()
                         } else {
                             loadingDialog.dismiss()
-                            Toast.makeText(mContext, it.exception?.message, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(mContext, task.exception?.message, Toast.LENGTH_SHORT).show()
                         }
                     }
             }
+
         }
 
-        // 회원 가입 버튼 클릭 리스너
-        binding.btnSignUp.setOnClickListener {
-
-            val myIntent = Intent(mContext, SignUpActivity::class.java)
-            startActivity(myIntent)
-            // 회원가입이 완료된 후 finish()를 하면 다시 로그인창으로 올 수 있게 finish()를 적지 않음.
+        binding.btnSignUp2.setOnClickListener {
+            startActivity(Intent(mContext, SignUpActivity::class.java))
         }
 
-        // 구글 로그인 버튼
         binding.btnSignInGoogle.setOnClickListener {
+            // 구글 로그인 관련
+            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id)) // 필수사항, 사용자의 token을 사용
+                .requestEmail() // 사용자의 이메일 사용
+                .requestProfile() // 사용자의 프로필 이미지 사용
+                .requestId() // 사용자의 아이디 사용
+                .build()
 
-            val signInIntent = googleSignInClient?.signInIntent
+            googleSignInClient = GoogleSignIn.getClient(mContext, gso)
+
+            val signInIntent = googleSignInClient.signInIntent
             startActivityForResult(signInIntent, 1004)
         }
-
-
     }
-
 
     override fun setValues() {
 
-        // 회원 가입 버튼 문구 밑줄처리
-        binding.btnSignUp.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-
-        // 구글 로그인 관련
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id)) // 필수사항, 사용자의 token을 사용
-            .requestEmail() // 사용자의 이메일 사용
-            .requestProfile() // 사용자의 프로필 이미지 사용
-            .requestId() // 사용자의 아이디 사용
-            .build()
-
-        googleSignInClient = GoogleSignIn.getClient(mContext, gso)
     }
 
-
     private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
-
         //구글로부터 로그인된 사용자의 정보(Credentail)을 얻어온다.
         val credential = GoogleAuthProvider.getCredential(account?.idToken!!, null)
 
         //그 정보를 사용하여 Firebase의 auth를 실행한다.
-        auth?.signInWithCredential(credential)
-            ?.addOnCompleteListener {  //통신 완료가 된 후 무슨일을 할지
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener {  //통신 완료가 된 후 무슨일을 할지
                     task ->
                 if (task.isSuccessful) {
                     // 로그인 처리
-                    val myIntent = Intent(mContext, MainActivity::class.java)
-                    startActivity(myIntent)
-                    finish()
+                    moveMainActivity()
 
                 } else {
                     // 오류가 난 경우
@@ -137,5 +137,12 @@ class SignInActivity : BaseActivity() {
                 }
 
             }
+    }
+
+    private fun moveMainActivity() {
+        Toast.makeText(mContext, "${auth.currentUser!!.email} 접속", Toast.LENGTH_SHORT).show()
+        val myIntent = Intent(mContext, MainActivity::class.java)
+        startActivity(myIntent)
+        finish()
     }
 }

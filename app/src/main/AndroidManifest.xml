@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.devmoon.thedeveloper_220329">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,13 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TheDeveloper_220329">
         <activity
-            android:name=".LoadingDialog"
+            android:name=".SignInActivity"
             android:exported="false" />
+        <activity
+            android:name=".LoadingDialog"
+            android:exported="true"
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".SignUpActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SignInActivity"
             android:exported="false" />
         <activity
             android:name=".SplashActivity"
@@ -31,7 +33,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>

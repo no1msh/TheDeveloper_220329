@@ -32,7 +32,7 @@
                 app:hintTextColor="@color/text_hint_color">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_sign_in_email"
+                    android:id="@+id/edt_sign_in_email2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="E-mail"
@@ -58,7 +58,7 @@
                 app:hintTextColor="@color/text_hint_color">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_sign_in_password"
+                    android:id="@+id/edt_sign_in_password2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Password"
@@ -90,7 +90,7 @@
                 android:layout_weight="1" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnLogIn"
+                android:id="@+id/btnLogIn2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:elevation="10dp"
@@ -117,13 +117,13 @@
                 android:textSize="15dp" />
 
             <TextView
-                android:id="@+id/btn_sign_up"
+                android:id="@+id/btn_sign_up2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="10dp"
                 android:padding="10dp"
-                android:text="회원가입하기"
+                android:text="@string/sign_up_text"
                 android:textColor="@color/primary_rally_green"
                 android:textSize="15dp"
                 android:textStyle="normal" />

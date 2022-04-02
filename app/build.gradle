@@ -46,7 +46,8 @@ dependencies {
     implementation 'com.airbnb.android:lottie:5.0.3'
 
     // firebase
-    implementation 'com.google.firebase:firebase-auth:21.0.3'
+    implementation 'com.google.firebase:firebase-auth-ktx:21.0.3'
+
     // google login
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
 
