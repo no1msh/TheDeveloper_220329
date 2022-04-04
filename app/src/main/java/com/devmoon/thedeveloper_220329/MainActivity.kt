@@ -1,67 +1,65 @@
 package com.devmoon.thedeveloper_220329
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import com.bumptech.glide.Glide
+import androidx.fragment.app.Fragment
 import com.devmoon.thedeveloper_220329.databinding.ActivityMainBinding
-import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import com.devmoon.thedeveloper_220329.fragments.GroupFragment
+import com.devmoon.thedeveloper_220329.fragments.CalendarFragment
+import com.devmoon.thedeveloper_220329.fragments.OverviewFragment
+import com.devmoon.thedeveloper_220329.fragments.SettingsFragment
 
 class MainActivity : BaseActivity() {
 
     lateinit var binding: ActivityMainBinding
 
-    private lateinit var auth: FirebaseAuth
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        auth = Firebase.auth
         setupEvents()
         setValues()
+
+        replaceFragment(OverviewFragment())
+        binding.bottomNav.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.overView -> {
+                    replaceFragment(OverviewFragment())
+                    actionBarTitle.text = "Overview"
+                }
+                R.id.calendar -> {
+                    replaceFragment(CalendarFragment())
+                    actionBarTitle.text = "Calendar"
+                }
+                R.id.group -> {
+                    replaceFragment(GroupFragment())
+                    actionBarTitle.text = "Group"
+                }
+                R.id.settings -> {
+                    replaceFragment(SettingsFragment())
+                    actionBarTitle.text = "Settings"
+                }
+            }
+            true
+        }
+
     }
 
+
+
     override fun setupEvents() {
-
-        binding.btnSubmit.setOnClickListener {
-            val inputStr = binding.edtNickname.text
-            if (inputStr != null) {
-                val uri = "https://ghchart.rshah.org/${inputStr}"
-                GlideToVectorYou.justLoadImage(this, Uri.parse(uri), binding.imgContributes)
-            } else {
-                Toast.makeText(this, "검색하고 싶은 닉네임을 입력해주세요.", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        binding.btnSignOut.setOnClickListener {
-            auth.signOut()
-//            val myIntent = Intent(mContext, SignInActivity :: class.java)
-//            startActivity(myIntent)
-//            finish()
-
-//            // 앱을 재시작
-//            finishAffinity()
-//            val intent = Intent(this, SplashActivity::class.java)
-//            startActivity(intent)
-//            System.exit(0)
-
-            val intent = Intent(this,SignInActivity :: class.java)
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            startActivity(intent)
-        }
-
     }
 
     override fun setValues() {
+        actionBarTitle.text = "Overview"
 
-        Glide.with(mContext).load(auth.currentUser!!.photoUrl).placeholder(R.mipmap.ic_launcher_foreground).into(binding.imgProfile)
-        binding.txtUserEmail.text = auth.currentUser?.email
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.fragment_container, fragment)
+            commit()
+        }
     }
 
 }

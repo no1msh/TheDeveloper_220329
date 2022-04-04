@@ -3,6 +3,7 @@ package com.devmoon.thedeveloper_220329
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.devmoon.thedeveloper_220329.databinding.ActivitySignInBinding
@@ -54,7 +55,7 @@ class SignInActivity : BaseActivity() {
 
                 //정상적으로 로그인되었다면
                 if (result.isSuccess) {
-                    //우리의 Firebase 서버에 사용자 이메일정보보내기
+                    //우리의 Firebase 서버에 사용자 정보보내기
                     val account = result.signInAccount
                     firebaseAuthWithGoogle(account)
                 }
@@ -100,6 +101,8 @@ class SignInActivity : BaseActivity() {
         }
 
         binding.btnSignInGoogle.setOnClickListener {
+
+            loadingDialog.show()
             // 구글 로그인 관련
             val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id)) // 필수사항, 사용자의 token을 사용
@@ -112,11 +115,13 @@ class SignInActivity : BaseActivity() {
 
             val signInIntent = googleSignInClient.signInIntent
             startActivityForResult(signInIntent, 1004)
+            loadingDialog.dismiss()
         }
     }
 
     override fun setValues() {
-
+        actionBarTitle.text = "Sign In"
+        actionBarProfileImg.visibility = View.GONE
     }
 
     private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
