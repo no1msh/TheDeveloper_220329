@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TheDeveloper_220329">
         <activity
+            android:name=".AddTodoListActivity"
+            android:exported="false" />
+        <activity
             android:name=".SignInActivity"
             android:exported="false" />
         <activity
