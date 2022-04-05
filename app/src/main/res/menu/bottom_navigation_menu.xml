@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/overView"
-        android:title="overview"
+        android:id="@+id/dashBoard"
+        android:title="dashboard"
         android:icon="@drawable/ic_dashboard_24"/>
 
     <item

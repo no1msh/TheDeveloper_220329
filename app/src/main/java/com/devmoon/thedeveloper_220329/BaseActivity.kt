@@ -7,6 +7,9 @@ import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 abstract class BaseActivity : AppCompatActivity() {
 
@@ -19,10 +22,13 @@ abstract class BaseActivity : AppCompatActivity() {
     lateinit var actionBarTitle : TextView
     lateinit var actionBarProfileImg : ImageView
 
+    lateinit var auth : FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         mContext = this
+        auth = Firebase.auth
 
         // 로딩 다이얼로그
         loadingDialog = LoadingDialog(mContext)
@@ -37,7 +43,7 @@ abstract class BaseActivity : AppCompatActivity() {
     abstract fun setupEvents()
     abstract fun setValues()
 
-    fun setCustomActionbar() {
+    private fun setCustomActionbar() {
 
         val defaultActionBar = supportActionBar!!
         defaultActionBar.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM

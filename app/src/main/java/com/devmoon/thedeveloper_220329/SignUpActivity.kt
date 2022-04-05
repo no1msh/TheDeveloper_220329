@@ -16,13 +16,13 @@ import com.google.firebase.ktx.Firebase
 class SignUpActivity : BaseActivity() {
 
     lateinit var binding : ActivitySignUpBinding
-    private lateinit var auth: FirebaseAuth
+//    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_sign_up)
 
-        auth = Firebase.auth
+//        auth = Firebase.auth
         setupEvents()
         setValues()
     }

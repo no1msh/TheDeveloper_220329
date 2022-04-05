@@ -21,15 +21,13 @@ class SignInActivity : BaseActivity() {
 
     lateinit var binding: ActivitySignInBinding
 
-    private lateinit var auth: FirebaseAuth
-
     private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_in)
 
-        auth = Firebase.auth
+//        auth = Firebase.auth
 
         setupEvents()
         setValues()

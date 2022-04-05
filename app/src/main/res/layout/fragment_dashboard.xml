@@ -74,6 +74,12 @@
             android:progressDrawable="@drawable/circle_progressbar"
             android:progressTint="@color/primary_rally_green" />
 
+        <WebView
+            android:id="@+id/bojProfile"
+            android:scrollbars="none"
+            android:layout_width="match_parent"
+            android:layout_height="190dp"/>
+
     </LinearLayout>
 
 

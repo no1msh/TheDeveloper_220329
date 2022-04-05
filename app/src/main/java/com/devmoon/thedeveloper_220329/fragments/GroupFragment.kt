@@ -7,20 +7,17 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.devmoon.thedeveloper_220329.R
 import com.devmoon.thedeveloper_220329.databinding.FragmentGroupBinding
-import com.google.firebase.auth.FirebaseAuth
 
 class GroupFragment : BaseFragment() {
 
-    lateinit var binding : FragmentGroupBinding
-
-    private lateinit var auth: FirebaseAuth
+    lateinit var binding: FragmentGroupBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_group , container , false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_group, container, false)
         return binding.root
     }
 
@@ -33,7 +30,7 @@ class GroupFragment : BaseFragment() {
 
     override fun setupEvents() {
 
-        }
+    }
 
     override fun setValues() {
 

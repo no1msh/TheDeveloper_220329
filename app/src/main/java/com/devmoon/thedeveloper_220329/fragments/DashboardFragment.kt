@@ -6,36 +6,33 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebSettings
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.devmoon.thedeveloper_220329.R
 import com.devmoon.thedeveloper_220329.SignInActivity
-import com.devmoon.thedeveloper_220329.databinding.FragmentOverviewBinding
+import com.devmoon.thedeveloper_220329.databinding.FragmentDashboardBinding
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
-class OverviewFragment : BaseFragment() {
+class DashboardFragment : BaseFragment() {
 
-    lateinit var binding : FragmentOverviewBinding
+    lateinit var binding: FragmentDashboardBinding
 
-    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_overview , container , false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dashboard, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        auth = Firebase.auth
         setupEvents()
         setValues()
     }
@@ -45,7 +42,11 @@ class OverviewFragment : BaseFragment() {
             val inputStr = binding.edtNickname.text
             if (inputStr != null) {
                 val uri = "https://ghchart.rshah.org/${inputStr}"
-                GlideToVectorYou.justLoadImage(requireActivity(), Uri.parse(uri), binding.imgContributes)
+                GlideToVectorYou.init().with(mContext)
+                    .requestBuilder.skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .load(Uri.parse(uri)).into(binding.imgContributes)
+                // GlideToVectorYou.justLoadImage(requireActivity(), Uri.parse(uri), binding.imgContributes)
             } else {
                 Toast.makeText(mContext, "검색하고 싶은 닉네임을 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
@@ -54,7 +55,7 @@ class OverviewFragment : BaseFragment() {
         binding.btnSignOut.setOnClickListener {
             auth.signOut()
 
-            val intent = Intent(mContext, SignInActivity :: class.java)
+            val intent = Intent(mContext, SignInActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
@@ -62,7 +63,11 @@ class OverviewFragment : BaseFragment() {
 
     override fun setValues() {
         binding.progressbar.progress = 70
-        Glide.with(mContext).load(auth.currentUser!!.photoUrl).placeholder(R.mipmap.ic_launcher_foreground).into(binding.imgProfile)
+        Glide.with(mContext).load(auth.currentUser!!.photoUrl)
+            .placeholder(R.mipmap.ic_launcher_foreground).into(binding.imgProfile)
         binding.txtUserEmail.text = auth.currentUser?.email
+
+        binding.bojProfile.setInitialScale(294)
+        binding.bojProfile.loadUrl("http://mazassumnida.wtf/api/v2/generate_badge?boj=no1msh")
     }
 }

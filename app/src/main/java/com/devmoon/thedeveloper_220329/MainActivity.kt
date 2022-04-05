@@ -8,15 +8,15 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewAnimationUtils
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.devmoon.thedeveloper_220329.databinding.ActivityMainBinding
 import com.devmoon.thedeveloper_220329.fragments.CalendarFragment
 import com.devmoon.thedeveloper_220329.fragments.GroupFragment
-import com.devmoon.thedeveloper_220329.fragments.OverviewFragment
+import com.devmoon.thedeveloper_220329.fragments.DashboardFragment
 import com.devmoon.thedeveloper_220329.fragments.SettingsFragment
 import kotlin.math.hypot
 import kotlin.math.max
@@ -32,7 +32,7 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        replaceFragment(OverviewFragment())
+        replaceFragment(DashboardFragment())
         binding.fab.backgroundTintList = ColorStateList.valueOf(
             ResourcesCompat.getColor(resources, R.color.primary_rally_green, null)
         )
@@ -47,9 +47,9 @@ class MainActivity : BaseActivity() {
 
         binding.bottomNav.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.overView -> {
-                    replaceFragment(OverviewFragment())
-                    actionBarTitle.text = "Overview"
+                R.id.dashBoard -> {
+                    replaceFragment(DashboardFragment())
+                    actionBarTitle.text = "Dashboard"
                     showFab()
                 }
                 R.id.calendar -> {
@@ -71,14 +71,19 @@ class MainActivity : BaseActivity() {
             true
         }
 
+        actionBarProfileImg.setOnClickListener {
+
+            binding.bottomNav.selectedItemId = R.id.settings
+        }
+
         binding.fab.setOnClickListener {
             revealLayoutFun()
         }
     }
 
     override fun setValues() {
-        actionBarTitle.text = "Overview"
-
+        binding.bottomNav.selectedItemId = R.id.dashBoard
+        Glide.with(mContext).load(auth.currentUser?.photoUrl).into(actionBarProfileImg)
     }
 
     private fun replaceFragment(fragment: Fragment) {
