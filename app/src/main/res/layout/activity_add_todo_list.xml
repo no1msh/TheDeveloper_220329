@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddTodoListActivity"
-    android:transitionName="transition_fab">
+    android:background="@color/main_Color_black"
+    tools:context=".AddTodoListActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

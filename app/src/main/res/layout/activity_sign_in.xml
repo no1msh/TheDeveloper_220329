@@ -9,6 +9,7 @@
         android:background="@color/main_Color_black"
         android:orientation="vertical"
         android:padding="10dp"
+        tools:ignore="HardcodedText"
         tools:context=".SignInActivity">
 
         <LinearLayout
@@ -89,16 +90,16 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <com.google.android.material.button.MaterialButton
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnLogIn2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:elevation="10dp"
-                android:text="Log In"
+                android:background="@drawable/button_box"
+                android:text="Sign In"
                 android:textAllCaps="false"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                app:cornerRadius="0dp" />
+                android:textColor="@color/white"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout

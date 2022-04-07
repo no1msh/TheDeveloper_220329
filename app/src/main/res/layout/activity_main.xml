@@ -24,19 +24,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/main_view_pager2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/bottom_nav"
-                android:layout_alignParentEnd="true"
                 android:layout_gravity="end|bottom"
-                android:layout_margin="20dp"
-                android:background="@color/primary_rally_green"
-                android:backgroundTint="@color/primary_rally_green"
-                android:elevation="20dp"
-                android:src="@drawable/ic_add_24"
-                app:fabCustomSize="70dp"
+                android:layout_margin="15dp"
+                android:elevation="10dp"
+                android:text="add Todo"
+                app:backgroundTint="@color/primary_rally_green"
+                app:icon="@drawable/ic_add_24"
                 app:tint="@color/black" />
         </FrameLayout>
 
