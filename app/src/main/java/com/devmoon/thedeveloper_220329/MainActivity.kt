@@ -1,33 +1,29 @@
 package com.devmoon.thedeveloper_220329
 
-import android.animation.Animator
-import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.res.ColorStateList
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.view.ViewAnimationUtils
-import androidx.annotation.RequiresApi
+import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.devmoon.thedeveloper_220329.databinding.ActivityMainBinding
 import com.devmoon.thedeveloper_220329.fragments.CalendarFragment
-import com.devmoon.thedeveloper_220329.fragments.GroupFragment
 import com.devmoon.thedeveloper_220329.fragments.DashboardFragment
+import com.devmoon.thedeveloper_220329.fragments.GroupFragment
 import com.devmoon.thedeveloper_220329.fragments.SettingsFragment
-import kotlin.math.hypot
-import kotlin.math.max
 
 class MainActivity : BaseActivity() {
 
     lateinit var binding: ActivityMainBinding
 
-    private var isRevealed = false
+    // 마지막으로 뒤로가기 버튼을 눌렀던 시간 저장
+    private var backKeyPressedTime: Long = 0
+    // 첫 번째 뒤로가기 버튼을 누를때 표시
+    private val toast: Toast? = null
 
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -77,13 +73,14 @@ class MainActivity : BaseActivity() {
         }
 
         binding.fab.setOnClickListener {
-            revealLayoutFun()
+            startActivity(Intent(mContext, AddTodoListActivity :: class.java))
         }
     }
 
     override fun setValues() {
         binding.bottomNav.selectedItemId = R.id.dashBoard
-        Glide.with(mContext).load(auth.currentUser?.photoUrl).into(actionBarProfileImg)
+        Glide.with(mContext).load(auth.currentUser?.photoUrl).error(R.mipmap.ic_launcher)
+            .into(actionBarProfileImg)
     }
 
     private fun replaceFragment(fragment: Fragment) {
@@ -101,114 +98,20 @@ class MainActivity : BaseActivity() {
         binding.fab.visibility = View.VISIBLE
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
-    @SuppressLint("ResourceAsColor")
-    private fun revealLayoutFun() {
-        if (!isRevealed) {
-            // get the right and bottom side
-            // lengths of the reveal layout
-            val x: Int = binding.revealLayout.right
-            val y: Int = binding.revealLayout.bottom
-
-            Log.d("reveal", "$x , $y")
-            // here the starting radius of the reveal
-            // layout is 0 when it is not visible
-            val startRadius = 0
-
-            // make the end radius should match
-            // the while parent view
-            val endRadius = hypot(
-                binding.revealLayout.width.toDouble(),
-                binding.revealLayout.height.toDouble()
-            ).toInt()
-            Log.d("reveal", "$endRadius")
-
-            // and set the background tint of the FAB to white
-            // color so that it can be visible
-            binding.fab.backgroundTintList = ColorStateList.valueOf(
-                ResourcesCompat.getColor(
-                    resources,
-                    R.color.black,
-                    null
-                )
-            )
-            // now set the icon as close for the FAB
-            binding.fab.setImageResource(R.drawable.ic_close_24)
-
-            // create the instance of the ViewAnimationUtils to
-            // initiate the circular reveal animation
-            val anim = ViewAnimationUtils.createCircularReveal(
-                binding.revealLayout,
-                x,
-                y,
-                startRadius.toFloat(),
-                endRadius.toFloat()
-            )
-
-            // make the invisible reveal layout to visible
-            // so that upon revealing it can be visible to user
-            binding.revealLayout.visibility = View.VISIBLE
-            // now start the reveal animation
-            anim.start()
-
-            // set the boolean value to true as the reveal
-            // layout is visible to the user
-            isRevealed = true
-
-        } else {
-            // get the right and bottom side lengths
-            // of the reveal layout
-            val x: Int = binding.revealLayout.right
-            val y: Int = binding.revealLayout.bottom
-
-            // here the starting radius of the reveal layout is its full width
-            val startRadius: Int = max(binding.revealLayout.width, binding.revealLayout.height)
-
-            // and the end radius should be zero
-            // at this point because the layout should be closed
-            val endRadius = 0
-
-            // now set the background tint of the FAB to green
-            // so that it can be visible to the user
-            binding.fab.backgroundTintList = ColorStateList.valueOf(
-                ResourcesCompat.getColor(
-                    resources,
-                    R.color.main_Color_black,
-                    null
-                )
-            )
-
-            // now again set the icon of the FAB to plus
-            binding.fab.setImageResource(R.drawable.ic_add_24)
-
-            // create the instance of the ViewAnimationUtils to
-            // initiate the circular reveal animation
-            val anim = ViewAnimationUtils.createCircularReveal(
-                binding.revealLayout,
-                x,
-                y,
-                startRadius.toFloat(),
-                endRadius.toFloat()
-            )
-
-            // now as soon as the animation is ending, the reveal
-            // layout should also be closed
-            anim.addListener(object : Animator.AnimatorListener {
-                override fun onAnimationStart(animator: Animator) {}
-                override fun onAnimationEnd(animator: Animator) {
-                    binding.revealLayout.visibility = View.GONE
-                }
-
-                override fun onAnimationCancel(animator: Animator) {}
-                override fun onAnimationRepeat(animator: Animator) {}
-            })
-
-            // start the closing animation
-            anim.start()
-
-            // set the boolean variable to false
-            // as the reveal layout is invisible
-            isRevealed = false
+    // 뒤로가기 키를 눌렀을 때
+    override fun onBackPressed() {
+        if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
+            backKeyPressedTime = System.currentTimeMillis()
+            val toast = Toast.makeText(this, "\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT)
+            toast.show()
+            return
+        }
+        // 마지막으로 뒤로가기 버튼을 눌렀던 시간에 2초를 더해 현재시간과 비교 후
+        // 마지막으로 뒤로가기 버튼을 눌렀던 시간이 2초가 지나지 않았으면 종료
+        // 현재 표시된 Toast 취소
+        if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
+            finishAffinity()
+            toast?.cancel()
         }
     }
 }

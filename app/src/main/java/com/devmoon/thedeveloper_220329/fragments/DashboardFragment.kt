@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebSettings
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
@@ -30,6 +29,7 @@ class DashboardFragment : BaseFragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -37,7 +37,9 @@ class DashboardFragment : BaseFragment() {
         setValues()
     }
 
+
     override fun setupEvents() {
+
         binding.btnSubmit.setOnClickListener {
             val inputStr = binding.edtNickname.text
             if (inputStr != null) {
@@ -45,8 +47,10 @@ class DashboardFragment : BaseFragment() {
                 GlideToVectorYou.init().with(mContext)
                     .requestBuilder.skipMemoryCache(true)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .placeholder(R.mipmap.ic_launcher)
                     .load(Uri.parse(uri)).into(binding.imgContributes)
                 // GlideToVectorYou.justLoadImage(requireActivity(), Uri.parse(uri), binding.imgContributes)
+
             } else {
                 Toast.makeText(mContext, "검색하고 싶은 닉네임을 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
@@ -67,7 +71,19 @@ class DashboardFragment : BaseFragment() {
             .placeholder(R.mipmap.ic_launcher_foreground).into(binding.imgProfile)
         binding.txtUserEmail.text = auth.currentUser?.email
 
-        binding.bojProfile.setInitialScale(294)
-        binding.bojProfile.loadUrl("http://mazassumnida.wtf/api/v2/generate_badge?boj=no1msh")
+
+
+        GlideToVectorYou.init().with(mContext)
+            .requestBuilder.skipMemoryCache(true)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .useAnimationPool(true)
+            .useUnlimitedSourceGeneratorsPool(true)
+            .load(Uri.parse("http://mazassumnida.wtf/api/mini/generate_badge?boj=no1msh"))
+            .into(binding.bojImage)
+
+    }
+
+    private fun setActionBar() {
+
     }
 }

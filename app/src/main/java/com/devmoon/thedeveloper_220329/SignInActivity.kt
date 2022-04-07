@@ -21,17 +21,22 @@ class SignInActivity : BaseActivity() {
 
     lateinit var binding: ActivitySignInBinding
 
+    // 구글 로그인
     private lateinit var googleSignInClient: GoogleSignInClient
+
+    // 마지막으로 뒤로가기 버튼을 눌렀던 시간 저장
+    private var backKeyPressedTime: Long = 0
+    // 첫 번째 뒤로가기 버튼을 누를때 표시
+    private val toast: Toast? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_in)
 
-//        auth = Firebase.auth
-
         setupEvents()
         setValues()
     }
+
 
     override fun onStart() {
         super.onStart()
@@ -41,6 +46,7 @@ class SignInActivity : BaseActivity() {
             moveMainActivity()
         }
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         // Activity.Result_OK : 정상 완료
@@ -60,6 +66,7 @@ class SignInActivity : BaseActivity() {
             }
         }
     }
+
 
     override fun setupEvents() {
         binding.btnLogIn2.setOnClickListener {
@@ -117,10 +124,30 @@ class SignInActivity : BaseActivity() {
         }
     }
 
+
     override fun setValues() {
         actionBarTitle.text = "Sign In"
         actionBarProfileImg.visibility = View.GONE
     }
+
+
+    // 뒤로가기 키를 눌렀을 때
+    override fun onBackPressed() {
+        if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
+            backKeyPressedTime = System.currentTimeMillis()
+            val toast = Toast.makeText(this, "\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT)
+            toast.show()
+            return
+        }
+        // 마지막으로 뒤로가기 버튼을 눌렀던 시간에 2초를 더해 현재시간과 비교 후
+        // 마지막으로 뒤로가기 버튼을 눌렀던 시간이 2초가 지나지 않았으면 종료
+        // 현재 표시된 Toast 취소
+        if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
+            finishAffinity()
+            toast?.cancel()
+        }
+    }
+
 
     private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
         //구글로부터 로그인된 사용자의 정보(Credentail)을 얻어온다.
@@ -148,4 +175,5 @@ class SignInActivity : BaseActivity() {
         startActivity(myIntent)
         finish()
     }
+
 }

@@ -1,28 +1,22 @@
 package com.devmoon.thedeveloper_220329
 
 import android.content.DialogInterface
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.TextWatcher
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import com.devmoon.thedeveloper_220329.databinding.ActivitySignUpBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 class SignUpActivity : BaseActivity() {
 
-    lateinit var binding : ActivitySignUpBinding
-//    private lateinit var auth: FirebaseAuth
+    lateinit var binding: ActivitySignUpBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_sign_up)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up)
 
-//        auth = Firebase.auth
         setupEvents()
         setValues()
     }
@@ -37,11 +31,10 @@ class SignUpActivity : BaseActivity() {
 
             if (binding.edtSignUpEmail.text.toString().isEmpty()
                 && binding.edtSignUpPassword.text.toString().isEmpty()
-                && binding.edtSignUpRepeatPassword.text.toString().isEmpty()) {
+                && binding.edtSignUpRepeatPassword.text.toString().isEmpty()
+            ) {
                 finish()
-            }
-
-            else { // 하나라도 작성하다만 상태라면
+            } else { // 하나라도 작성하다만 상태라면
 
                 val ad = AlertDialog.Builder(mContext)
                     .setTitle("1분이면 됩니다.")
@@ -49,7 +42,7 @@ class SignUpActivity : BaseActivity() {
                     .setPositiveButton("종료", DialogInterface.OnClickListener { dialog, which ->
                         finish()
                     })
-                    .setNegativeButton("취소" , null)
+                    .setNegativeButton("취소", null)
                     .show()
             }
         }
@@ -62,11 +55,11 @@ class SignUpActivity : BaseActivity() {
             val signUpPassword = binding.edtSignUpPassword.text.toString()
             val signUpRepeatPassword = binding.edtSignUpRepeatPassword.text.toString()
 
-            if (!signUpEmail.contains('@')){
+            if (!signUpEmail.contains('@')) {
                 Toast.makeText(mContext, "올바른 이메일 형식이 아닙니다.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
 
-            } else if(signUpPassword != signUpRepeatPassword || signUpPassword =="") {
+            } else if (signUpPassword != signUpRepeatPassword || signUpPassword == "") {
                 Toast.makeText(mContext, "패스워드를 다시 확인해주세요.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
 
@@ -74,21 +67,28 @@ class SignUpActivity : BaseActivity() {
 
                 loadingDialog.show() // 시간이 걸리는 작업이기에 로딩창 실행
 
-                auth.createUserWithEmailAndPassword(signUpEmail,signUpPassword)
+                auth.createUserWithEmailAndPassword(signUpEmail, signUpPassword)
                     .addOnCompleteListener { task ->
 
                         if (task.isSuccessful) {
                             loadingDialog.dismiss() // 작업이 완료되면 로딩창 종료
-                            auth.currentUser!!.sendEmailVerification().addOnCompleteListener {
-                                task ->
-                                if (task.isSuccessful) {
-                                    Toast.makeText(mContext, "회원가입 완료. 이메일을 인증해주세요.", Toast.LENGTH_SHORT).show()
-                                }
-                                else{
-                                    Toast.makeText(mContext, task.exception!!.message, Toast.LENGTH_SHORT).show()
-                                }
+                            auth.currentUser!!.sendEmailVerification()
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        Toast.makeText(
+                                            mContext,
+                                            "회원가입 완료. 이메일을 인증해주세요.",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    } else {
+                                        Toast.makeText(
+                                            mContext,
+                                            task.exception!!.message,
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
 
-                            }
+                                }
                             // 정상적으로 이메일과 비번이 전달되어
                             // 새 유저 계정을 생성과 서버 db 저장 완료 및 로그인
                             // 즉, 기존에 있는 계정이 아니다.
@@ -101,7 +101,8 @@ class SignUpActivity : BaseActivity() {
 
                             // 예외메시지가 있다면 출력
                             // 에러가 났다거나 서버가 연결이 실패했다거나
-                            Toast.makeText(mContext, task.exception?.message , Toast.LENGTH_LONG).show()
+                            Toast.makeText(mContext, task.exception?.message, Toast.LENGTH_LONG)
+                                .show()
 
                         } else {
                             loadingDialog.dismiss()
@@ -116,9 +117,14 @@ class SignUpActivity : BaseActivity() {
     }
 
     override fun setValues() {
-
-
+        actionBarTitle.text = "Sign Up"
+        actionBarProfileImg.visibility = View.GONE
     }
 
+    override fun onBackPressed() {
+//        super.onBackPressed()
+
+        binding.btnSignUpBack.performClick()
+    }
 
 }
