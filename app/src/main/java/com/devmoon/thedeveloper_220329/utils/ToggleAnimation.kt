@@ -1,5 +1,7 @@
 package com.devmoon.thedeveloper_220329.utils
 import android.animation.ObjectAnimator
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
@@ -12,11 +14,15 @@ class ToggleAnimation {
         fun toggleArrow(view: View, isExpanded: Boolean): Boolean {
             return if (isExpanded) {
                 view.animate().setDuration(200).rotationBy(180f)
-                //val animator = ObjectAnimator.ofFloat(view, "rotationX",0f, 180f).setDuration(1000).start()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    view.isClickable = true
+                }, 200)
                 true
             } else {
                 view.animate().setDuration(200).rotationBy(-180f)
-                //val animator = ObjectAnimator.ofFloat(view, "rotationX",-180f, 0f).setDuration(1000).start()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    view.isClickable = true
+                }, 200)
                 false
             }
         }

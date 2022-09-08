@@ -36,11 +36,13 @@ class DashboardFragment : BaseFragment() {
     override fun setupEvents() {
 
         binding.imgCollapseToday.setOnClickListener {
+            binding.imgCollapseToday.isClickable = false
             val show = toggleLayout(!isTodayExpanded, binding.imgCollapseToday, binding.linearLayTodayTodo)
             isTodayExpanded = show
         }
 
         binding.imgExpandWeekly.setOnClickListener {
+            binding.imgExpandWeekly.isClickable = false
             val show = toggleLayout(!isWeeklyExpanded, binding.imgExpandWeekly,binding.linearLayWeeklyTodo )
             isWeeklyExpanded = show
         }
