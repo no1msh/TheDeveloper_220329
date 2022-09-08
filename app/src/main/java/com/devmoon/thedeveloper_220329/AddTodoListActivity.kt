@@ -1,10 +1,7 @@
 package com.devmoon.thedeveloper_220329
 
-import android.content.DialogInterface
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AlertDialog
 
 class AddTodoListActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,6 +10,7 @@ class AddTodoListActivity : BaseActivity() {
 
         setupEvents()
         setValues()
+        setActionBar()
     }
 
     override fun setupEvents() {
@@ -20,6 +18,10 @@ class AddTodoListActivity : BaseActivity() {
     }
 
     override fun setValues() {
+
+    }
+
+    private fun setActionBar() {
         actionBarBackImg.visibility = View.VISIBLE
         actionBarTitle.text = "Add Todo List"
         actionBarProfileImg.visibility = View.GONE

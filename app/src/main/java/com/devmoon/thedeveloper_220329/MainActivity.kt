@@ -15,10 +15,8 @@ class MainActivity : BaseActivity() {
 
     lateinit var binding: ActivityMainBinding
 
-    // 마지막으로 뒤로가기 버튼을 눌렀던 시간 저장
+    // '한번 더 누르면 종료' 관련 변수들
     private var backKeyPressedTime: Long = 0
-
-    // 첫 번째 뒤로가기 버튼을 누를때 표시
     private val toast: Toast? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,8 +27,6 @@ class MainActivity : BaseActivity() {
         setViewPager()
         setupEvents()
         setValues()
-
-
     }
 
 
@@ -47,24 +43,12 @@ class MainActivity : BaseActivity() {
 
     override fun setValues() {
 
-        Glide.with(mContext).load(auth.currentUser?.photoUrl).error(R.mipmap.ic_launcher).into(actionBarProfileImg)
-
-
     }
 
-
-    private fun hideFab() {
-        binding.fab.visibility = View.GONE
-    }
-
-    private fun showFab() {
-        binding.fab.visibility = View.VISIBLE
-    }
 
     private fun setActionbar() {
         actionBarTitle.text = "Dashboard"
         Glide.with(mContext).load(auth.currentUser?.photoUrl).error(R.mipmap.ic_launcher).into(actionBarProfileImg)
-
     }
 
     private fun setViewPager() {
@@ -72,9 +56,9 @@ class MainActivity : BaseActivity() {
         // 페이저에 어댑터 연결
         binding.mainViewPager2.adapter = MainViewPagerAdapter(this)
 
-        binding.mainViewPager2.offscreenPageLimit = 4
+        binding.mainViewPager2.offscreenPageLimit = 4 // 사용자가 다른 페이지를 봐도 프래그먼트가 종료되지 않음
 
-        binding.mainViewPager2.isUserInputEnabled = false
+        binding.mainViewPager2.isUserInputEnabled = false // swipe 액션 삭제
 
         // 슬라이드 하여 페이지가 변경되면 바텀네비게이션의 탭도 그 페이지로 활성화
         binding.mainViewPager2.registerOnPageChangeCallback(
@@ -94,25 +78,25 @@ class MainActivity : BaseActivity() {
                 R.id.dashBoard -> {
                     binding.mainViewPager2.setCurrentItem(0,false)
                     actionBarTitle.text = "Dashboard"
-                    showFab()
+                    binding.fab.visibility = View.VISIBLE
                     return@setOnItemSelectedListener true
                 }
                 R.id.calendar -> {
                     binding.mainViewPager2.setCurrentItem(1,false)
                     actionBarTitle.text = "Calendar"
-                    showFab()
+                    binding.fab.visibility = View.VISIBLE
                     return@setOnItemSelectedListener true
                 }
                 R.id.group -> {
                     binding.mainViewPager2.setCurrentItem(2,false)
                     actionBarTitle.text = "Group"
-                    hideFab()
+                    binding.fab.visibility = View.GONE
                     return@setOnItemSelectedListener true
                 }
                 R.id.settings -> {
                     binding.mainViewPager2.setCurrentItem(3,false)
                     actionBarTitle.text = "Settings"
-                    hideFab()
+                    binding.fab.visibility = View.GONE
                     return@setOnItemSelectedListener true
                 }
 

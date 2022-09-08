@@ -1,103 +1,290 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/main_Color_black">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/main_Color_black"
-            android:orientation="vertical"
             android:clipToPadding="false"
-            android:padding="25dp"
+            android:orientation="vertical"
+            android:padding="20dp"
             tools:context=".MainActivity"
             tools:ignore="HardcodedText">
 
-            <ImageView
-                android:id="@+id/imgProfile"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@mipmap/ic_launcher" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/hello"
+                android:textColor="@color/white"
+                android:textSize="22dp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp">
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="10dp"
+                    android:layout_weight="1"
+                    android:background="@color/box_color"
+                    android:elevation="10dp"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="3"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Weekly ToDo"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="목표 진행도"
+                            android:textColor="@color/secondary_text_color" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="4/5"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/more_weekly"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:text="@string/more"
+                            android:textColor="@color/secondary_text_color" />
+
+                        <ProgressBar
+                            android:id="@+id/progressbar_weekly"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:layout_marginVertical="10dp"
+                            android:indeterminate="false"
+                            android:max="100"
+                            android:progressBackgroundTint="@color/text_field_color"
+                            android:progressDrawable="@drawable/circle_progressbar"
+                            android:progressTint="@color/primary_rally_green" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:background="@color/box_color"
+                    android:elevation="10dp"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="3"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Today ToDo"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="목표 진행도"
+                            android:textColor="@color/secondary_text_color" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="3/6"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/more_today"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:text="@string/more"
+                            android:textColor="@color/secondary_text_color" />
+
+                        <ProgressBar
+                            android:id="@+id/progressbar_today"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:layout_marginVertical="10dp"
+                            android:indeterminate="false"
+                            android:max="100"
+                            android:progressBackgroundTint="@color/text_field_color"
+                            android:progressDrawable="@drawable/circle_progressbar"
+                            android:progressTint="@color/primary_rally_green" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/box_color"
+                android:elevation="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="Today ToDo"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <ImageView
-                    android:id="@+id/imgContributes"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:id="@+id/img_collapse_today"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_arrow_up"
+                    app:tint="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLay_today_todo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:elevation="10dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="테스트에용"
+                    android:textSize="30dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:src="@mipmap/ic_launcher" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false">
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/box_color"
+                android:elevation="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/edtNickname"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="확인하고 싶은 닉네임을 입력해주세요." />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnSubmit"
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/button_box"
-                    android:text="검색"
-                    android:layout_margin="10dp"
-                    android:translationZ="10dp"
-                    android:elevation="10dp"
+                    android:layout_marginStart="10dp"
+                    android:text="Weekly ToDo"
                     android:textColor="@color/white"
-                    android:textStyle="normal" />
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:id="@+id/img_expand_weekly"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_arrow_down"
+                    app:tint="@color/white" />
             </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnSignOut"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_box"
-                android:text="Sign Out"
-                android:translationZ="10dp"
-                android:layout_margin="10dp"
-                android:elevation="10dp"
-                android:textColor="@color/white" />
-
-            <TextView
-                android:id="@+id/txtUserEmail"
+            <LinearLayout
+                android:id="@+id/linearLay_weekly_todo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="유저이메일" />
+                android:background="@color/white"
+                android:elevation="10dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
 
-            <ProgressBar
-                android:id="@+id/progressbar"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:indeterminate="false"
-                android:max="100"
-                android:progressBackgroundTint="@color/text_field_color"
-                android:progressDrawable="@drawable/circle_progressbar"
-                android:progressTint="@color/primary_rally_green" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="테스트에용"
+                    android:textSize="30dp" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/diamond"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_launcher" />
+            </LinearLayout>
 
-            <ImageView
-                android:id="@+id/bojImage"
-                android:layout_width="165dp"
-                android:layout_height="30dp"
-                android:src="@color/primary_rally_green" />
         </LinearLayout>
     </ScrollView>
 

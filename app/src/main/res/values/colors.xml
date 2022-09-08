@@ -7,8 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="status_bar">#27272F</color>
     <color name="main_Color_black">#33333D</color>
     <color name="button_color">#41414B</color>
+    <color name="box_color">#373740</color>
     <color name="text_field_color">#25282F</color>
     <color name="text_hint_color">#7C7C83</color>
+    <color name="secondary_text_color">#C4C4C4</color>
 </resources>
